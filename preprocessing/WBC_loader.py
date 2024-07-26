@@ -32,6 +32,7 @@ class SmearDatasetQC(Dataset):
             y_start = 78000,
             y_end = 79000,
             size = 10,
+            wbc_resize = (64, 64),
             qc=True,
             wbc_qc=True,
         ):
@@ -45,6 +46,7 @@ class SmearDatasetQC(Dataset):
         self.x_end = x_end
         self.y_end = y_end
         self.size = size
+        self.wbc_resize = wbc_resize
         self.qc = qc
         self.wbc_qc = wbc_qc
     
@@ -131,7 +133,7 @@ class SmearDatasetQC(Dataset):
     def __getitem__(self, idx):
         transform = transforms.Compose(
             [
-                transforms.Resize(size=((64, 64))),
+                transforms.Resize(size=(self.wbc_resize)),
             ]
         )
         coords = self.coords_candi[idx]  # (x,y)
